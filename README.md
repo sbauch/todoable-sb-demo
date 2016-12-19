@@ -1,13 +1,8 @@
-Bare Sinatra and React app
+Note:
+You'll need to run the following commands to get started!
 
-ruby, bundler gem and npm are required dependencies
+`npm install`
+`bundle install`
 
-run:
-- `git clone git@github.com:ilasorsa/bare-sinatra-react.git`
-- `bundle install`
-- `npm install`
-- `webpack`
-- `ruby server.rb`
-- `open your browser at the URL localhost:4567`
-
-and you're done :)
+Then in order to get the application up and running you have to open up two
+tabs and run `ruby server.rb` in one and `webpack --watch` in the other!
