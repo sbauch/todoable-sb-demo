@@ -19772,10 +19772,6 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Customer = __webpack_require__(160);
-
-	var _Customer2 = _interopRequireDefault(_Customer);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -19792,52 +19788,17 @@
 
 	    var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
-	    _this.state = {
-	      customers: [{
-	        name: 'Donny, Mayor of Dunkins',
-	        gif: 'http://i.giphy.com/dQryH4rpYh9oQ.gif',
-	        quote: "This is the face of Dunkin Donuts right here."
-	      }, {
-	        name: 'Mark, Mad Dunkin Employee',
-	        gif: "http://i.giphy.com/XpE3NBotHGJoY.gif",
-	        quote: "No smoking in heah, it's coming in through the crack!"
-	      }, {
-	        name: 'Yuppie Starbucks',
-	        gif: "http://i.giphy.com/zXK3SmaSCYEFO.gif",
-	        quote: "Where else can I get breakfast and the perfect stawking stuffah?"
-	      }, {
-	        name: 'Dewey',
-	        gif: 'http://i.giphy.com/Df43GSwWA1G9O.gif',
-	        quote: "I COULDN'T BREATHE, DONNY"
-	      }]
-	    };
+	    _this.state = {};
 	    return _this;
 	  }
 
 	  _createClass(App, [{
 	    key: 'render',
 	    value: function render() {
-	      debugger;
-	      var id = 0;
-
-	      var customers = this.state.customers.map(function (customer) {
-	        id++;
-	        return _react2.default.createElement(_Customer2.default, {
-	          key: id,
-	          name: customer.name,
-	          gif: customer.gif,
-	          quote: customer.quote
-	        });
-	      });
 	      return _react2.default.createElement(
-	        'div',
+	        'h1',
 	        null,
-	        _react2.default.createElement(
-	          'h1',
-	          null,
-	          'Actual Customers of Dunkin'
-	        ),
-	        customers
+	        'BOILERPLATE !'
 	      );
 	    }
 	  }]);
@@ -19846,116 +19807,6 @@
 	}(_react.Component);
 
 	exports.default = App;
-
-/***/ },
-/* 160 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Profile = __webpack_require__(161);
-
-	var _Profile2 = _interopRequireDefault(_Profile);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Customer = function (_Component) {
-	  _inherits(Customer, _Component);
-
-	  function Customer(props) {
-	    _classCallCheck(this, Customer);
-
-	    var _this = _possibleConstructorReturn(this, (Customer.__proto__ || Object.getPrototypeOf(Customer)).call(this, props));
-
-	    _this.state = {
-	      showProfile: false
-	    };
-	    _this.handleClick = _this.handleClick.bind(_this);
-	    return _this;
-	  }
-
-	  _createClass(Customer, [{
-	    key: 'handleClick',
-	    value: function handleClick(event) {
-	      event.preventDefault();
-	      var toggleProfile = !this.state.showProfile;
-	      this.setState({ showProfile: toggleProfile });
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(_Profile2.default, {
-	        name: this.props.name,
-	        gif: this.props.gif,
-	        quote: this.props.quote,
-	        handleClick: this.handleClick,
-	        showProfile: this.state.showProfile
-	      });
-	    }
-	  }]);
-
-	  return Customer;
-	}(_react.Component);
-
-	exports.default = Customer;
-
-/***/ },
-/* 161 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Profile = function Profile(props) {
-	  var hide = "center hidden";
-
-	  if (props.showProfile) {
-	    hide = "center";
-	  }
-
-	  return _react2.default.createElement(
-	    "div",
-	    { onClick: props.handleClick },
-	    _react2.default.createElement(
-	      "h1",
-	      null,
-	      props.name
-	    ),
-	    _react2.default.createElement("img", { className: hide, src: props.gif }),
-	    _react2.default.createElement(
-	      "p",
-	      { className: hide },
-	      props.quote
-	    )
-	  );
-	};
-
-	exports.default = Profile;
 
 /***/ }
 /******/ ]);
