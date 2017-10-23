@@ -1,26 +1,25 @@
-module.exports = {
-  entry: './react/main.js',
-  output: {
-    path: __dirname,
-    filename: './public/bundle.js'
-  },
-  resolve: {
-    root: __dirname,
-    alias: {
+var path = require('path');
+var webpack = require('webpack');
 
-    },
-    extensions: ['', '.js', '.jsx']
-  },
-  module: {
-    loaders: [
-      {
-        loader: 'babel-loader',
-        query: {
-          presets: ['react', 'es2015']
-        },
-        test: /\.js$/,
-        exclude: /(node_modules|bower_components)/
-      }
-    ]
-  }
-};
+ module.exports = {
+   entry: './react/main.js',
+   output: {
+     path: __dirname,
+     filename: './public/bundle.js'
+   },
+     module: {
+         loaders: [
+             {
+                 test: /\.js$/,
+                 loader: 'babel-loader',
+                 query: {
+                     presets: ['react', 'es2015']
+                 }
+             }
+         ]
+     },
+     stats: {
+         colors: true
+     },
+     devtool: 'source-map'
+ };
