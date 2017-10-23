@@ -19802,7 +19802,7 @@
 	      return _react2.default.createElement(
 	        'h1',
 	        null,
-	        'BOILERPLATE !'
+	        'TODO ME'
 	      );
 	    }
 	  }]);
