@@ -1,10 +1,13 @@
-import React from 'react'
-import VisibleTodoList from '../containers/VisibleTodoList'
-import AddTodo from '../containers/AddTodo'
+import React from 'react';
+import VisibleTodoList from '../containers/VisibleTodoList';
+import AddTodo from '../containers/AddTodo';
+import ListHeader from '../containers/ListHeader';
+
 const ShowList = (props) => (
   <div>
-    <AddTodo {...props}/>
+    <ListHeader {...props} />
     <VisibleTodoList {...props} />
+    <AddTodo {...props} />
   </div>
 )
 

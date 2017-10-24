@@ -27940,10 +27940,6 @@
 	      return state;
 	    case _todoActions.MARK_DONE_ITEM_SUCCESS:
 	
-	      // const items = state.items.filter((item) => {
-	      //   return item.id !== action.payload.id;
-	      // });
-	
 	      return _extends({}, state, {
 	        items: state.items.map(function (item) {
 	          return item.id === action.payload.id ? _extends({}, item, { status: "finished" }) : item;
@@ -28054,6 +28050,10 @@
 	
 	var _listActions = __webpack_require__(340);
 	
+	var _todoActions = __webpack_require__(338);
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
 	var initialState = {
 	  loading: false,
 	  loaded: false,
@@ -28076,6 +28076,46 @@
 	        data: action.payload
 	      });
 	    case _listActions.LISTS_FAILURE:
+	      return state;
+	    case _listActions.CREATE_LIST_REQUEST:
+	      return state;
+	    case _listActions.CREATE_LIST_SUCCESS:
+	      return _extends({}, state, {
+	        data: [].concat(_toConsumableArray(state.data), [action.payload])
+	      });
+	    case _listActions.CREATE_LIST_FAILURE:
+	      return state;
+	    case _listActions.DELETE_LIST_REQUEST:
+	      return state;
+	    case _listActions.DELETE_LIST_SUCCESS:
+	      return _extends({}, state, {
+	        data: state.data.filter(function (item) {
+	          return item.id !== action.payload.id;
+	        })
+	      });
+	    case _listActions.DELETE_LIST_FAILURE:
+	      return state;
+	    case _todoActions.LIST_ITEMS_SUCCESS:
+	      return _extends({}, state, {
+	        selectedListId: action.payload.id,
+	        selectedListName: action.payload.name
+	      });
+	    case _listActions.UPDATE_LIST_REQUEST:
+	      return state;
+	    case _listActions.UPDATE_LIST_SUCCESS:
+	      return _extends({}, state, {
+	        selectedListName: action.payload.name,
+	        data: state.data.map(function (list) {
+	          return list.id === action.payload.id ? _extends({}, list, { name: action.payload.name }) : list;
+	        })
+	      });
+	    case _listActions.UPDATE_LIST_FAILURE:
+	      return state;
+	    case _todoActions.CLEAR_LIST_ITEMS:
+	      return _extends({}, state, {
+	        selectedListName: null,
+	        selectedListId: null
+	      });
 	
 	    default:
 	      return state;
@@ -28123,6 +28163,7 @@
 	  return _defineProperty({}, _reduxApiMiddleware.CALL_API, {
 	    endpoint: '/api/lists',
 	    method: 'POST',
+	    body: JSON.stringify({ name: name }),
 	    types: [CREATE_LIST_REQUEST, CREATE_LIST_SUCCESS, CREATE_LIST_FAILURE]
 	  });
 	}
@@ -28135,6 +28176,7 @@
 	  return _defineProperty({}, _reduxApiMiddleware.CALL_API, {
 	    endpoint: '/api/lists/' + id,
 	    method: 'PUT',
+	    body: JSON.stringify({ name: name }),
 	    types: [UPDATE_LIST_REQUEST, UPDATE_LIST_SUCCESS, UPDATE_LIST_FAILURE]
 	  });
 	}
@@ -28391,11 +28433,7 @@
 	
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return {
-	    // onTodoClick: id => {
-	    //   dispatch(toggleTodo(id))
-	    // },
 	    createTodo: function createTodo(id, name) {
-	      console.log(name);
 	      dispatch((0, _todoActions.createListItem)(id, name));
 	    }
 	  };
@@ -28594,11 +28632,11 @@
 	      }
 	    },
 	    name,
-	    _react2.default.createElement(
+	    status == "todo" ? _react2.default.createElement(
 	      'button',
 	      { onClick: markDone },
 	      'Done'
-	    ),
+	    ) : null,
 	    _react2.default.createElement(
 	      'button',
 	      { onClick: deleteItem },
@@ -28636,7 +28674,7 @@
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
-	var _ShowList = __webpack_require__(389);
+	var _ShowList = __webpack_require__(390);
 	
 	var _ShowList2 = _interopRequireDefault(_ShowList);
 	
@@ -32349,12 +32387,17 @@
 	
 	var _ListsContainer2 = _interopRequireDefault(_ListsContainer);
 	
+	var _AddList = __webpack_require__(389);
+	
+	var _AddList2 = _interopRequireDefault(_AddList);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var Home = function Home() {
 	  return _react2.default.createElement(
 	    'div',
 	    null,
+	    _react2.default.createElement(_AddList2.default, null),
 	    _react2.default.createElement(_ListsContainer2.default, null)
 	  );
 	};
@@ -32392,6 +32435,10 @@
 	  return {
 	    loadLists: function loadLists() {
 	      dispatch((0, _listActions.fetchLists)());
+	    },
+	
+	    destroyList: function destroyList(id) {
+	      dispatch((0, _listActions.deleteList)(id));
 	    }
 	  };
 	};
@@ -32449,7 +32496,8 @@
 	    value: function render() {
 	      var _props = this.props,
 	          lists = _props.lists,
-	          loaded = _props.loaded;
+	          loaded = _props.loaded,
+	          destroyList = _props.destroyList;
 	
 	
 	      if (!loaded) {
@@ -32472,6 +32520,13 @@
 	              { to: '/lists/' + list.id, key: list.id },
 	              ' ',
 	              list.name
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { onClick: function onClick() {
+	                  return destroyList(list.id);
+	                } },
+	              'Remove'
 	            )
 	          );
 	        })
@@ -32511,6 +32566,76 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRedux = __webpack_require__(159);
+	
+	var _listActions = __webpack_require__(340);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var AddList = function AddList(_ref) {
+	  var createList = _ref.createList;
+	
+	  var input = void 0;
+	
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'form',
+	      {
+	        onSubmit: function onSubmit(e) {
+	          e.preventDefault();
+	          if (!input.value.trim()) {
+	            return;
+	          }
+	
+	          createList(input.value);
+	          input.value = '';
+	        }
+	      },
+	      _react2.default.createElement('input', {
+	        ref: function ref(node) {
+	          input = node;
+	        }
+	      }),
+	      _react2.default.createElement(
+	        'button',
+	        { type: 'submit' },
+	        'Add New List'
+	      )
+	    )
+	  );
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    // onTodoClick: id => {
+	    //   dispatch(toggleTodo(id))
+	    // },
+	    createList: function createList(name) {
+	      dispatch((0, _listActions.createList)(name));
+	    }
+	  };
+	};
+	
+	AddList = (0, _reactRedux.connect)(null, mapDispatchToProps)(AddList);
+	
+	exports.default = AddList;
+
+/***/ }),
+/* 390 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
 	var _VisibleTodoList = __webpack_require__(346);
 	
 	var _VisibleTodoList2 = _interopRequireDefault(_VisibleTodoList);
@@ -32519,18 +32644,151 @@
 	
 	var _AddTodo2 = _interopRequireDefault(_AddTodo);
 	
+	var _ListHeader = __webpack_require__(391);
+	
+	var _ListHeader2 = _interopRequireDefault(_ListHeader);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var ShowList = function ShowList(props) {
 	  return _react2.default.createElement(
 	    'div',
 	    null,
-	    _react2.default.createElement(_AddTodo2.default, props),
-	    _react2.default.createElement(_VisibleTodoList2.default, props)
+	    _react2.default.createElement(_ListHeader2.default, props),
+	    _react2.default.createElement(_VisibleTodoList2.default, props),
+	    _react2.default.createElement(_AddTodo2.default, props)
 	  );
 	};
 	
 	exports.default = ShowList;
+
+/***/ }),
+/* 391 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactRedux = __webpack_require__(159);
+	
+	var _todoActions = __webpack_require__(338);
+	
+	var _listActions = __webpack_require__(340);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var ListHeader = function (_React$Component) {
+	  _inherits(ListHeader, _React$Component);
+	
+	  function ListHeader() {
+	    _classCallCheck(this, ListHeader);
+	
+	    var _this = _possibleConstructorReturn(this, (ListHeader.__proto__ || Object.getPrototypeOf(ListHeader)).call(this));
+	
+	    _this.state = {
+	      editing: false
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(ListHeader, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+	
+	      var input = void 0;
+	
+	      var _props = this.props,
+	          name = _props.name,
+	          id = _props.id,
+	          match = _props.match,
+	          updateList = _props.updateList;
+	
+	
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        this.state.editing ? _react2.default.createElement(
+	          'form',
+	          {
+	            onSubmit: function onSubmit(e) {
+	              e.preventDefault();
+	              if (!input.value.trim()) {
+	                return;
+	              }
+	
+	              updateList(match.params.list_id, input.value);
+	              input.value = '';
+	              _this2.setState({ editing: false });
+	            }
+	          },
+	          _react2.default.createElement('input', {
+	            placeholder: name,
+	            ref: function ref(node) {
+	              input = node;
+	            }
+	          }),
+	          _react2.default.createElement(
+	            'button',
+	            { type: 'submit' },
+	            'Rename'
+	          )
+	        ) : _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            name
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { onClick: function onClick() {
+	                return _this2.setState({ editing: true });
+	              } },
+	            'Rename'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return ListHeader;
+	}(_react2.default.Component);
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    name: state.lists.selectedListName,
+	    id: state.lists.selectedListId
+	  };
+	};
+	
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return {
+	    updateList: function updateList(id, name) {
+	      dispatch((0, _listActions.updateList)(id, name));
+	    }
+	  };
+	};
+	
+	ListHeader = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ListHeader);
+	
+	exports.default = ListHeader;
 
 /***/ })
 /******/ ]);

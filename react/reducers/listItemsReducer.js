@@ -61,10 +61,6 @@ const lists = (state = initialState, action) => {
         return state
     case MARK_DONE_ITEM_SUCCESS:
 
-      // const items = state.items.filter((item) => {
-      //   return item.id !== action.payload.id;
-      // });
-
       return {
         ...state,
         items: state.items.map(

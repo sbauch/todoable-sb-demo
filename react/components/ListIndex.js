@@ -11,7 +11,7 @@ class ListIndex extends React.Component {
   }
 
   render () {
-    const { lists, loaded } = this.props;
+    const { lists, loaded, destroyList } = this.props;
 
     if (!loaded) {
       return (
@@ -24,6 +24,7 @@ class ListIndex extends React.Component {
           { lists.map( (list) => (
             <li key={list.id}>
               <Link to={`/lists/${list.id}`} key={list.id}> {list.name}</Link>
+              <button onClick={() => destroyList(list.id)}>Remove</button>
             </li>
           ))}
         </ul>

@@ -8,7 +8,7 @@ const Todo = ({ markDone, deleteItem, status, name }) => (
     }}
   >
     {name}
-    <button onClick={markDone}>Done</button>
+    { status == "todo" ? <button onClick={markDone}>Done</button> : null }
     <button onClick={deleteItem}>Delete</button>
   </li>
 )

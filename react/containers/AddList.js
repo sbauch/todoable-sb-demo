@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createListItem } from '../actions/todoActions'
+import { createList } from '../actions/listActions'
 
-let AddTodo = ({ match, createTodo }) => {
+let AddList = ({ createList }) => {
   let input
 
   return (
@@ -14,7 +14,7 @@ let AddTodo = ({ match, createTodo }) => {
             return
           }
 
-          createTodo(match.params.list_id, input.value)
+          createList(input.value)
           input.value = ''
         }}
       >
@@ -24,7 +24,7 @@ let AddTodo = ({ match, createTodo }) => {
           }}
         />
         <button type="submit">
-          Add Todo
+          Add New List
         </button>
       </form>
     </div>
@@ -33,16 +33,20 @@ let AddTodo = ({ match, createTodo }) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    createTodo: (id, name) => {
-      dispatch(createListItem(id, name))
+    // onTodoClick: id => {
+    //   dispatch(toggleTodo(id))
+    // },
+    createList: (name) => {
+      dispatch(createList(name))
     }
   }
 }
 
-AddTodo = connect(
+AddList = connect(
   null,
   mapDispatchToProps
-)(AddTodo)
+)(AddList)
 
 
-export default AddTodo
+
+export default AddList

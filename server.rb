@@ -22,6 +22,23 @@ get '/api/lists/:id' do
   list.attributes.to_json
 end
 
+post '/api/lists' do
+  parse_body
+  list = client.create_list(name: @request_payload['name'])
+  content_type :json
+  list.attributes.to_json
+end
+
+delete '/api/lists/:list_id' do
+  if client.delete_list(id: params['list_id'])
+    status 200
+    content_type :json
+    {id: params['list_id']}.to_json
+  else
+    status 500
+  end
+end
+
 post '/api/lists/:list_id' do
   parse_body
   new_item = client.create_item(
@@ -30,6 +47,17 @@ post '/api/lists/:list_id' do
   )
   content_type :json
   {item: new_item.attributes}.to_json
+end
+
+put '/api/lists/:list_id' do
+  parse_body
+  if client.update(list_id: params['list_id'], name: @request_payload['name'])
+    status 200
+    content_type :json
+    {id: params['list_id'], name: @request_payload['name']}.to_json
+  else
+    status 500
+  end
 end
 
 put '/api/lists/:list_id/items/:id/done' do

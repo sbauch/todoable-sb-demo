@@ -23,6 +23,7 @@ export function createList(name) {
     [CALL_API]: {
       endpoint: `/api/lists`,
       method: 'POST',
+      body: JSON.stringify({name}),
       types: [CREATE_LIST_REQUEST, CREATE_LIST_SUCCESS, CREATE_LIST_FAILURE]
     }
   }
@@ -37,6 +38,7 @@ export function updateList(id, name) {
     [CALL_API]: {
       endpoint: `/api/lists/${id}`,
       method: 'PUT',
+      body: JSON.stringify({name}),
       types: [UPDATE_LIST_REQUEST, UPDATE_LIST_SUCCESS, UPDATE_LIST_FAILURE]
     }
   }
