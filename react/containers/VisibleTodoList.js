@@ -1,17 +1,34 @@
 import { connect } from 'react-redux'
-import { toggleTodo } from '../actions'
 import TodoList from '../components/TodoList'
+import {
+  fetchListItems,
+  clearListItems,
+  markDone,
+  deleteItem,
+} from '../actions/todoActions';
 
 const mapStateToProps = state => {
   return {
-    todos: state.todos
+    todos: state.todos.items,
+    loaded: state.todos.loaded
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onTodoClick: id => {
-      dispatch(toggleTodo(id))
+    markDone: (id, listId) => {
+      dispatch(markDone(id, listId))
+    },
+
+    deleteItem: (id, listId) => {
+      dispatch(deleteItem(id, listId))
+    },
+
+    loadItems: (id) => {
+      dispatch(fetchListItems(id))
+    },
+    clearItems: () => {
+      dispatch(clearListItems)
     }
   }
 }
@@ -21,4 +38,4 @@ const VisibleTodoList = connect(
   mapDispatchToProps
 )(TodoList)
 
-export default VisibleTodoList
+export default VisibleTodoList;

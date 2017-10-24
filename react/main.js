@@ -1,12 +1,11 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-// import configureStore from './configureStore'
 import { apiMiddleware } from 'redux-api-middleware';
 import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
-
 import rootReducer from './reducers/index'
 import App from './components/App'
+import { BrowserRouter } from 'react-router-dom'
 
 let store = createStore(
   rootReducer,
@@ -19,8 +18,11 @@ let store = createStore(
 )
 
 render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <BrowserRouter>
+
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </BrowserRouter>,
   document.getElementById('app')
 )

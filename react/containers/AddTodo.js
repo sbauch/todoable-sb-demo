@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addTodo } from '../actions'
+import { createListItem } from '../actions/todoActions'
 
-let AddTodo = ({ dispatch }) => {
+let AddTodo = ({ match, createTodo }) => {
   let input
 
   return (
@@ -13,7 +13,8 @@ let AddTodo = ({ dispatch }) => {
           if (!input.value.trim()) {
             return
           }
-          dispatch(addTodo(input.value))
+
+          createTodo(match.params.list_id, input.value)
           input.value = ''
         }}
       >
@@ -29,6 +30,24 @@ let AddTodo = ({ dispatch }) => {
     </div>
   )
 }
-AddTodo = connect()(AddTodo)
+
+const mapDispatchToProps = dispatch => {
+  return {
+    // onTodoClick: id => {
+    //   dispatch(toggleTodo(id))
+    // },
+    createTodo: (id, name) => {
+      console.log(name)
+      dispatch(createListItem(id, name))
+    }
+  }
+}
+
+AddTodo = connect(
+  null,
+  mapDispatchToProps
+)(AddTodo)
+
+
 
 export default AddTodo

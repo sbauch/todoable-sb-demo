@@ -1,21 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-const Todo = ({ onClick, completed, text }) => (
+const Todo = ({ markDone, deleteItem, status, name }) => (
   <li
-    onClick={onClick}
     style={{
-      textDecoration: completed ? 'line-through' : 'none'
+      textDecoration: status == "todo" ?  'none' : 'line-through'
     }}
   >
-    {text}
+    {name}
+    <button onClick={markDone}>Done</button>
+    <button onClick={deleteItem}>Delete</button>
   </li>
 )
 
 Todo.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  completed: PropTypes.bool.isRequired,
-  text: PropTypes.string.isRequired
+  markDone: PropTypes.func.isRequired,
+  deleteItem: PropTypes.func.isRequired,
+  status: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired
 }
 
 export default Todo

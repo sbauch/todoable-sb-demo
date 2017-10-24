@@ -11,9 +11,12 @@
   "author": "Ivan Lasorsa",
   "license": "MIT",
   "dependencies": {
+    "babel-preset-stage-2": "^6.24.1",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.2",
     "redux": "^3.7.2",
     "redux-api-middleware": "^2.0.0-beta.3"
   },

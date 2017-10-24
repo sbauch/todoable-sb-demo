@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
-import todos from './todoApp'
+import todos from './listItemsReducer';
+import lists from './listReducer';
 
 const rootReducer = combineReducers({
-  todos
+  todos,
+  lists
 })
 
 export default rootReducer
