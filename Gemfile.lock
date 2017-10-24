@@ -1,8 +1,8 @@
 GIT
   remote: https://github.com/sbauch/todoable-sb.git
-  revision: e14d2124514cb928b548732808fcd78ed3f8211c
+  revision: 3a212b4183ab9a211206b9ed77d5b550230d5a61
   specs:
-    todoable-sb (0.10.0)
+    todoable-sb (0.11.0)
       httparty (~> 0.15.6)
 
 GEM
