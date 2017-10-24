@@ -1,9 +1,11 @@
 require 'rubygems'
 require 'bundler/setup'
-require 'dotenv/load'
 
 # require your gems as usual
 require 'sinatra'
+if Sinatra::Base.development?
+  require 'dotenv/load'
+end
 require 'todoable'
 require 'json'
 
