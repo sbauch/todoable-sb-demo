@@ -70,7 +70,9 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var store = (0, _redux.createStore)(_index2.default, (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxApiMiddleware.apiMiddleware), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+	var store = (0, _redux.createStore)(_index2.default, (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxApiMiddleware.apiMiddleware), window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : function (noop) {
+	  return noop;
+	}));
 	
 	(0, _reactDom.render)(_react2.default.createElement(
 	  _reactRouterDom.BrowserRouter,
