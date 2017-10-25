@@ -51,7 +51,7 @@ end
 
 put '/api/lists/:list_id' do
   parse_body
-  if client.update(list_id: params['list_id'], name: @request_payload['name'])
+  if client.update_list(list_id: params['list_id'], name: @request_payload['name'])
     status 200
     content_type :json
     {id: params['list_id'], name: @request_payload['name']}.to_json
@@ -61,7 +61,7 @@ put '/api/lists/:list_id' do
 end
 
 put '/api/lists/:list_id/items/:id/done' do
-  if client.finish(id: params['id'], list_id: params['list_id'])
+  if client.finish_item(id: params['id'], list_id: params['list_id'])
     status 200
     content_type :json
     {id: params['id']}.to_json
@@ -71,7 +71,7 @@ put '/api/lists/:list_id/items/:id/done' do
 end
 
 delete '/api/lists/:list_id/items/:id' do
-  if client.delete(id: params['id'], list_id: params['list_id'])
+  if client.delete_item(id: params['id'], list_id: params['list_id'])
     status 200
     content_type :json
     {id: params['id']}.to_json
