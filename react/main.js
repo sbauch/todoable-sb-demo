@@ -19,7 +19,6 @@ let store = createStore(
 
 render(
   <BrowserRouter>
-
     <Provider store={store}>
       <App />
     </Provider>
